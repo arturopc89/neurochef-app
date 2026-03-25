@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NeuroChef — Organización + Nutrición para cerebros neurodivergentes</title>
+<meta name="description" content="La plataforma creada por una nutricionista neurodivergente para ayudarte a organizar tu vida, tu alimentación y encontrar tu comunidad. TDAH · TEA · Neurodivergencia.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --sage-50:#f4f7f0;
+  --sage-100:#e8eede;
+  --sage-200:#d1ddbf;
+  --sage-300:#a8bc82;
+  --sage-400:#7d9a52;
+  --sage-500:#5c7a38;
+  --sage-600:#4a6330;
+  --sage-700:#374a24;
+  --terra-50:#fdf6f0;
+  --terra-100:#faeadb;
+  --terra-200:#f4d2b5;
+  --terra-300:#e8a872;
+  --terra-400:#d4844a;
+  --terra-500:#b8672e;
+  --terra-600:#944e1f;
+  --cream:#fefcf7;
+  --cream-dark:#f9f4eb;
+  --text-primary:#2c2418;
+  --text-secondary:#6b5e4f;
+  --text-muted:#9e9183;
+  --lavender-50:#f3f0fa;
+  --lavender-100:#e4ddf4;
+  --lavender-200:#c9bae9;
+  --lavender-400:#8b6cc7;
+  --lavender-600:#6244a0;
+  --rose-50:#fdf2f4;
+  --rose-100:#fbe5e8;
+  --rose-300:#f0a3ae;
+  --rose-400:#e87085;
+  --rose-600:#c43a56;
+}
+
+html{scroll-behavior:smooth;font-size:16px}
+body{
+  font-family:'Plus Jakarta Sans',system-ui,sans-serif;
+  color:var(--text-primary);
+  background:var(--cream);
+  line-height:1.6;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+
+h1,h2,h3{font-family:'DM Serif Display',Georgia,serif;font-weight:400;line-height:1.2}
+
+/* ====== NAV ====== */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:1rem 2rem;
+  background:rgba(254,252,247,0.85);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(44,36,24,0.06);
+  display:flex;align-items:center;justify-content:space-between;
+  transition:all 0.3s;
+}
+.nav-logo{font-family:'DM Serif Display',serif;font-size:1.5rem;color:var(--sage-600);text-decoration:none;display:flex;align-items:center;gap:8px}
+.nav-logo span{color:var(--terra-400)}
+.nav-links{display:flex;gap:2rem;align-items:center}
+.nav-links a{text-decoration:none;color:var(--text-secondary);font-size:0.875rem;font-weight:500;transition:color 0.2s}
+.nav-links a:hover{color:var(--sage-600)}
+.nav-cta{
+  background:var(--sage-500);color:#fff;padding:0.6rem 1.5rem;border-radius:100px;
+  font-size:0.875rem;font-weight:600;text-decoration:none;transition:all 0.3s;border:none;cursor:pointer;
+}
+.nav-cta:hover{background:var(--sage-600);transform:translateY(-1px);box-shadow:0 4px 16px rgba(92,122,56,0.25)}
+
+@media(max-width:768px){
+  .nav-links{display:none}
+  .nav{padding:0.8rem 1.2rem}
+}
+
+/* ====== HERO ====== */
+.hero{
+  min-height:100vh;
+  padding:8rem 2rem 4rem;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+  background:linear-gradient(165deg,var(--cream) 0%,var(--sage-50) 35%,var(--terra-50) 70%,var(--cream) 100%);
+}
+.hero::before{
+  content:'';position:absolute;top:-200px;right:-200px;width:600px;height:600px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(168,188,130,0.15) 0%,transparent 70%);
+  animation:float 20s ease-in-out infinite;
+}
+.hero::after{
+  content:'';position:absolute;bottom:-100px;left:-150px;width:500px;height:500px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(232,168,114,0.1) 0%,transparent 70%);
+  animation:float 25s ease-in-out infinite reverse;
+}
+@keyframes float{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(30px,-20px) scale(1.05)}}
+
+.hero-content{
+  max-width:1100px;width:100%;
+  display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;
+  position:relative;z-index:1;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--lavender-50);border:1px solid var(--lavender-200);
+  padding:6px 16px;border-radius:100px;font-size:0.8rem;font-weight:600;
+  color:var(--lavender-600);margin-bottom:1.5rem;
+  animation:fadeInUp 0.8s ease both;
+}
+.hero-badge::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--lavender-400);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(0.8)}}
+
+.hero h1{
+  font-size:clamp(2.5rem,5vw,3.8rem);
+  color:var(--text-primary);
+  margin-bottom:1.5rem;
+  animation:fadeInUp 0.8s ease 0.1s both;
+}
+.hero h1 em{font-style:italic;color:var(--sage-500)}
+.hero h1 .accent{color:var(--terra-400)}
+
+.hero-description{
+  font-size:1.15rem;color:var(--text-secondary);line-height:1.8;
+  margin-bottom:2rem;max-width:500px;
+  animation:fadeInUp 0.8s ease 0.2s both;
+}
+.hero-tags{
+  display:flex;flex-wrap:wrap;gap:8px;margin-bottom:2.5rem;
+  animation:fadeInUp 0.8s ease 0.3s both;
+}
+.hero-tags span{
+  background:var(--cream);border:1px solid rgba(44,36,24,0.1);
+  padding:6px 14px;border-radius:100px;font-size:0.8rem;font-weight:500;color:var(--text-secondary);
+}
+
+.hero-form{
+  display:flex;gap:10px;max-width:440px;
+  animation:fadeInUp 0.8s ease 0.4s both;
+}
+.hero-form input{
+  flex:1;padding:0.9rem 1.2rem;border-radius:100px;
+  border:1.5px solid rgba(44,36,24,0.12);background:#fff;
+  font-size:0.95rem;font-family:inherit;color:var(--text-primary);
+  transition:all 0.3s;outline:none;
+}
+.hero-form input::placeholder{color:var(--text-muted)}
+.hero-form input:focus{border-color:var(--sage-400);box-shadow:0 0 0 4px rgba(125,154,82,0.12)}
+.hero-form button{
+  padding:0.9rem 2rem;border-radius:100px;
+  background:var(--sage-500);color:#fff;border:none;
+  font-size:0.95rem;font-weight:600;font-family:inherit;cursor:pointer;
+  transition:all 0.3s;white-space:nowrap;
+}
+.hero-form button:hover{background:var(--sage-600);transform:translateY(-1px);box-shadow:0 4px 20px rgba(92,122,56,0.3)}
+
+.hero-social-proof{
+  display:flex;align-items:center;gap:12px;margin-top:1.5rem;
+  animation:fadeInUp 0.8s ease 0.5s both;
+}
+.hero-avatars{display:flex}
+.hero-avatars div{
+  width:36px;height:36px;border-radius:50%;
+  border:2.5px solid var(--cream);margin-left:-10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.7rem;font-weight:700;color:#fff;
+}
+.hero-avatars div:first-child{margin-left:0}
+.hero-social-proof p{font-size:0.85rem;color:var(--text-muted)}
+.hero-social-proof strong{color:var(--text-secondary);font-weight:600}
+
+/* Hero visual */
+.hero-visual{
+  position:relative;
+  animation:fadeInUp 1s ease 0.3s both;
+}
+.hero-card{
+  background:#fff;border-radius:24px;padding:2rem;
+  box-shadow:0 4px 40px rgba(44,36,24,0.08),0 1px 3px rgba(44,36,24,0.04);
+  border:1px solid rgba(44,36,24,0.04);
+  position:relative;overflow:hidden;
+}
+.hero-card::before{
+  content:'';position:absolute;top:0;right:0;width:200px;height:200px;
+  background:radial-gradient(circle,var(--sage-50) 0%,transparent 70%);
+}
+.hero-card-header{
+  display:flex;align-items:center;gap:12px;margin-bottom:1.5rem;position:relative;
+}
+.hero-card-avatar{
+  width:48px;height:48px;border-radius:50%;
+  background:linear-gradient(135deg,var(--sage-300),var(--sage-500));
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.2rem;font-weight:700;color:#fff;
+}
+.hero-card-name{font-weight:600;font-size:0.95rem}
+.hero-card-role{font-size:0.8rem;color:var(--text-muted)}
+
+.hero-card-day{
+  display:flex;align-items:center;gap:10px;margin-bottom:1.2rem;
+}
+.hero-card-day h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.1rem;font-weight:600}
+.hero-card-day span{
+  background:var(--terra-100);color:var(--terra-600);
+  padding:3px 10px;border-radius:100px;font-size:0.7rem;font-weight:600;
+}
+
+.task-list{display:flex;flex-direction:column;gap:10px;position:relative}
+.task{
+  display:flex;align-items:center;gap:12px;
+  padding:12px 16px;border-radius:14px;
+  background:var(--cream);transition:all 0.3s;
+  border:1px solid transparent;
+}
+.task:hover{border-color:rgba(44,36,24,0.06);transform:translateX(4px)}
+.task-check{
+  width:22px;height:22px;border-radius:50%;border:2px solid var(--sage-300);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  transition:all 0.3s;
+}
+.task.done .task-check{background:var(--sage-500);border-color:var(--sage-500)}
+.task.done .task-check::after{content:'✓';color:#fff;font-size:12px;font-weight:700}
+.task.done .task-text{text-decoration:line-through;color:var(--text-muted)}
+.task-text{font-size:0.9rem;font-weight:500;flex:1}
+.task-tag{
+  font-size:0.65rem;font-weight:600;padding:3px 8px;border-radius:6px;white-space:nowrap;
+}
+.tag-nutri{background:var(--sage-100);color:var(--sage-600)}
+.tag-org{background:var(--lavender-50);color:var(--lavender-600)}
+.tag-self{background:var(--rose-50);color:var(--rose-600)}
+
+/* Floating elements */
+.float-card{
+  position:absolute;background:#fff;border-radius:16px;padding:14px 18px;
+  box-shadow:0 8px 32px rgba(44,36,24,0.1);border:1px solid rgba(44,36,24,0.04);
+  font-size:0.8rem;z-index:2;
+}
+.float-meal{right:-40px;top:20px;animation:floatSmall 6s ease-in-out infinite}
+.float-meal .meal-emoji{font-size:1.5rem;margin-bottom:6px}
+.float-meal .meal-name{font-weight:600;color:var(--text-primary)}
+.float-meal .meal-tag{font-size:0.7rem;color:var(--sage-500);font-weight:500}
+
+.float-streak{left:-30px;bottom:40px;animation:floatSmall 7s ease-in-out infinite reverse}
+.float-streak .streak-num{font-size:1.6rem;font-weight:700;color:var(--terra-400)}
+.float-streak .streak-label{color:var(--text-muted);font-size:0.75rem}
+
+@keyframes floatSmall{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+@media(max-width:768px){
+  .hero{padding:6rem 1.2rem 3rem}
+  .hero-content{grid-template-columns:1fr;gap:2.5rem;text-align:center}
+  .hero-description{max-width:100%}
+  .hero-tags{justify-content:center}
+  .hero-form{flex-direction:column;max-width:100%}
+  .hero-social-proof{justify-content:center}
+  .float-card{display:none}
+}
+
+/* ====== PROBLEM ====== */
+.problem{
+  padding:6rem 2rem;
+  background:var(--cream-dark);
+  position:relative;
+}
+.problem-inner{max-width:900px;margin:0 auto;text-align:center}
+.section-label{
+  font-size:0.8rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;
+  color:var(--terra-400);margin-bottom:1rem;display:block;
+}
+.problem h2{font-size:clamp(2rem,4vw,2.8rem);margin-bottom:1.5rem}
+.problem-text{font-size:1.1rem;color:var(--text-secondary);max-width:650px;margin:0 auto 3rem;line-height:1.8}
+
+.problem-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:1.5rem;text-align:left;
+}
+.problem-card{
+  background:#fff;padding:1.8rem;border-radius:20px;
+  border:1px solid rgba(44,36,24,0.06);
+  transition:all 0.4s;
+}
+.problem-card:hover{transform:translateY(-4px);box-shadow:0 8px 32px rgba(44,36,24,0.08)}
+.problem-icon{
+  width:48px;height:48px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.4rem;margin-bottom:1rem;
+}
+.problem-card h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:1rem;font-weight:600;margin-bottom:0.6rem}
+.problem-card p{font-size:0.9rem;color:var(--text-secondary);line-height:1.7}
+
+/* ====== SOLUTION ====== */
+.solution{padding:6rem 2rem;background:var(--cream)}
+.solution-inner{max-width:1100px;margin:0 auto}
+.solution-header{text-align:center;margin-bottom:4rem}
+.solution h2{font-size:clamp(2rem,4vw,2.8rem);margin-bottom:1rem}
+.solution-sub{font-size:1.1rem;color:var(--text-secondary);max-width:600px;margin:0 auto}
+
+.pillars{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2rem}
+.pillar{
+  background:#fff;border-radius:24px;padding:2.5rem 2rem;
+  border:1px solid rgba(44,36,24,0.06);
+  transition:all 0.4s;position:relative;overflow:hidden;
+}
+.pillar:hover{transform:translateY(-6px);box-shadow:0 12px 40px rgba(44,36,24,0.1)}
+.pillar::after{
+  content:'';position:absolute;top:0;left:0;right:0;height:4px;
+  border-radius:24px 24px 0 0;
+}
+.pillar-org::after{background:linear-gradient(90deg,var(--lavender-400),var(--lavender-200))}
+.pillar-nutri::after{background:linear-gradient(90deg,var(--sage-400),var(--sage-200))}
+.pillar-comm::after{background:linear-gradient(90deg,var(--rose-400),var(--rose-300))}
+
+.pillar-icon{
+  width:56px;height:56px;border-radius:16px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.6rem;margin-bottom:1.5rem;
+}
+.pillar h3{font-size:1.3rem;margin-bottom:0.8rem}
+.pillar>p{font-size:0.95rem;color:var(--text-secondary);line-height:1.7;margin-bottom:1.5rem}
+.pillar-features{display:flex;flex-direction:column;gap:10px}
+.pillar-feature{
+  display:flex;align-items:center;gap:10px;
+  font-size:0.875rem;color:var(--text-secondary);
+}
+.pillar-feature::before{
+  content:'';width:20px;height:20px;border-radius:50%;
+  flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  font-size:0.7rem;
+}
+.pillar-org .pillar-feature::before{background:var(--lavender-50);content:'✓';color:var(--lavender-600);text-align:center;line-height:20px}
+.pillar-nutri .pillar-feature::before{background:var(--sage-50);content:'✓';color:var(--sage-600);text-align:center;line-height:20px}
+.pillar-comm .pillar-feature::before{background:var(--rose-50);content:'✓';color:var(--rose-600);text-align:center;line-height:20px}
+
+/* ====== ABOUT / STORY ====== */
+.story{
+  padding:6rem 2rem;
+  background:linear-gradient(180deg,var(--cream-dark),var(--sage-50));
+}
+.story-inner{
+  max-width:1000px;margin:0 auto;
+  display:grid;grid-template-columns:1fr 1.2fr;gap:4rem;align-items:center;
+}
+.story-image{
+  position:relative;
+}
+.story-photo{
+  width:100%;aspect-ratio:4/5;border-radius:24px;overflow:hidden;
+  border:1px solid rgba(44,36,24,0.06);
+  position:relative;
+}
+.story-photo img{
+  width:100%;height:100%;object-fit:cover;object-position:center top;
+}
+
+.story-quote-float{
+  position:absolute;bottom:-20px;right:-20px;
+  background:#fff;border-radius:16px;padding:16px 20px;
+  box-shadow:0 8px 32px rgba(44,36,24,0.1);
+  max-width:220px;font-size:0.85rem;line-height:1.6;
+  font-style:italic;color:var(--text-secondary);
+  border:1px solid rgba(44,36,24,0.04);
+}
+
+.story-content .section-label{text-align:left}
+.story h2{font-size:clamp(1.8rem,3.5vw,2.4rem);margin-bottom:1.5rem}
+.story-text{font-size:1rem;color:var(--text-secondary);line-height:1.9;margin-bottom:1rem}
+.story-highlight{
+  background:var(--sage-50);border-left:3px solid var(--sage-400);
+  padding:1.2rem 1.5rem;border-radius:0 12px 12px 0;
+  margin:1.5rem 0;font-size:0.95rem;color:var(--text-secondary);line-height:1.7;
+}
+
+@media(max-width:768px){
+  .story-inner{grid-template-columns:1fr;gap:2.5rem}
+  .story-quote-float{right:10px;bottom:-15px;max-width:180px}
+}
+
+/* ====== PRICING ====== */
+.pricing{padding:6rem 2rem;background:var(--cream)}
+.pricing-inner{max-width:1000px;margin:0 auto}
+.pricing-header{text-align:center;margin-bottom:3.5rem}
+.pricing h2{font-size:clamp(2rem,4vw,2.8rem);margin-bottom:1rem}
+.pricing-sub{font-size:1.1rem;color:var(--text-secondary)}
+
+.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem}
+.price-card{
+  background:#fff;border-radius:24px;padding:2.5rem 2rem;
+  border:1px solid rgba(44,36,24,0.06);
+  transition:all 0.3s;position:relative;
+}
+.price-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(44,36,24,0.08)}
+.price-card.featured{
+  border:2px solid var(--sage-400);
+  box-shadow:0 8px 32px rgba(92,122,56,0.12);
+}
+.price-badge{
+  position:absolute;top:-12px;left:50%;transform:translateX(-50%);
+  background:var(--sage-500);color:#fff;padding:4px 16px;border-radius:100px;
+  font-size:0.75rem;font-weight:700;white-space:nowrap;
+}
+.price-name{font-family:'Plus Jakarta Sans',sans-serif;font-size:1rem;font-weight:600;margin-bottom:0.5rem}
+.price-amount{font-family:'DM Serif Display',serif;font-size:2.5rem;margin-bottom:0.3rem}
+.price-amount span{font-size:1rem;color:var(--text-muted);font-family:'Plus Jakarta Sans',sans-serif}
+.price-desc{font-size:0.875rem;color:var(--text-muted);margin-bottom:1.5rem;line-height:1.6}
+.price-features{display:flex;flex-direction:column;gap:10px;margin-bottom:2rem}
+.price-feature{
+  display:flex;align-items:flex-start;gap:10px;
+  font-size:0.875rem;color:var(--text-secondary);
+}
+.price-feature::before{content:'✓';color:var(--sage-500);font-weight:700;margin-top:1px}
+.price-btn{
+  display:block;text-align:center;padding:0.85rem;border-radius:100px;
+  font-size:0.95rem;font-weight:600;text-decoration:none;transition:all 0.3s;
+  font-family:inherit;cursor:pointer;width:100%;
+}
+.price-btn-primary{background:var(--sage-500);color:#fff;border:none}
+.price-btn-primary:hover{background:var(--sage-600);transform:translateY(-1px)}
+.price-btn-outline{background:transparent;color:var(--sage-600);border:1.5px solid var(--sage-300)}
+.price-btn-outline:hover{background:var(--sage-50)}
+
+/* ====== CTA FINAL ====== */
+.cta{
+  padding:6rem 2rem;
+  background:linear-gradient(135deg,var(--sage-600) 0%,var(--sage-700) 50%,var(--sage-600) 100%);
+  text-align:center;color:#fff;
+  position:relative;overflow:hidden;
+}
+.cta::before{
+  content:'';position:absolute;top:-50%;right:-20%;width:600px;height:600px;
+  border-radius:50%;background:rgba(255,255,255,0.03);
+}
+.cta-inner{max-width:650px;margin:0 auto;position:relative;z-index:1}
+.cta h2{font-size:clamp(2rem,4vw,2.8rem);color:#fff;margin-bottom:1rem}
+.cta p{font-size:1.1rem;opacity:0.85;margin-bottom:2.5rem;line-height:1.7}
+
+.cta-form{
+  display:flex;gap:10px;max-width:480px;margin:0 auto 1.5rem;
+}
+.cta-form input{
+  flex:1;padding:1rem 1.2rem;border-radius:100px;
+  border:1.5px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.1);
+  font-size:0.95rem;font-family:inherit;color:#fff;
+  outline:none;transition:all 0.3s;
+}
+.cta-form input::placeholder{color:rgba(255,255,255,0.5)}
+.cta-form input:focus{border-color:rgba(255,255,255,0.5);background:rgba(255,255,255,0.15)}
+.cta-form button{
+  padding:1rem 2.2rem;border-radius:100px;
+  background:#fff;color:var(--sage-700);border:none;
+  font-size:0.95rem;font-weight:700;font-family:inherit;cursor:pointer;
+  transition:all 0.3s;white-space:nowrap;
+}
+.cta-form button:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.2)}
+.cta-note{font-size:0.8rem;opacity:0.6}
+
+@media(max-width:768px){
+  .cta-form{flex-direction:column}
+}
+
+/* ====== FOOTER ====== */
+.footer{
+  padding:3rem 2rem;background:var(--text-primary);
+  color:rgba(255,255,255,0.5);text-align:center;
+  font-size:0.85rem;
+}
+.footer a{color:rgba(255,255,255,0.7);text-decoration:none}
+.footer a:hover{color:#fff}
+.footer-links{display:flex;justify-content:center;gap:2rem;margin-bottom:1rem}
+
+/* ====== SUCCESS TOAST ====== */
+.toast{
+  position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(120px);
+  background:#fff;color:var(--text-primary);padding:1rem 2rem;border-radius:16px;
+  box-shadow:0 12px 40px rgba(44,36,24,0.15);font-size:0.95rem;font-weight:500;
+  z-index:200;transition:transform 0.5s cubic-bezier(0.22,1,0.36,1);
+  display:flex;align-items:center;gap:10px;
+}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.toast-icon{width:28px;height:28px;border-radius:50%;background:var(--sage-500);color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.8rem;font-weight:700}
+
+/* ====== SCROLL ANIMATIONS ====== */
+.reveal{opacity:0;transform:translateY(30px);transition:all 0.8s cubic-bezier(0.22,1,0.36,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-delay-1{transition-delay:0.1s}
+.reveal-delay-2{transition-delay:0.2s}
+.reveal-delay-3{transition-delay:0.3s}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="#" class="nav-logo">Neuro<span>Chef</span></a>
+  <div class="nav-links">
+    <a href="#problema">El problema</a>
+    <a href="#solucion">Solución</a>
+    <a href="#adriana">Adriana</a>
+    <a href="#precios">Precios</a>
+    <a href="#unirme" class="nav-cta">Unirme a la lista</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div>
+      <div class="hero-badge"><span></span>Lista de espera abierta</div>
+      <h1>Tu cerebro funciona <em>diferente.</em><br>Tu sistema también <span class="accent">debería.</span></h1>
+      <p class="hero-description">La primera plataforma que combina organización adaptada a cerebros TDAH/TEA, nutrición funcional antiinflamatoria y una comunidad que entiende lo que vivís.</p>
+      <div class="hero-tags">
+        <span>TDAH</span>
+        <span>TEA</span>
+        <span>Nutrición funcional</span>
+        <span>Organización</span>
+        <span>Antiinflamación</span>
+      </div>
+      <form class="hero-form" id="hero-form">
+        <input type="email" placeholder="Tu email" required>
+        <button type="submit">Quiero acceso</button>
+      </form>
+      <div class="hero-social-proof">
+        <div class="hero-avatars">
+          <div style="background:var(--sage-400)">AP</div>
+          <div style="background:var(--terra-400)">MR</div>
+          <div style="background:var(--lavender-400)">LS</div>
+          <div style="background:var(--rose-400)">+</div>
+        </div>
+        <p><strong>19K+</strong> personas siguen a Adriana</p>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-card">
+        <div class="hero-card-header">
+          <div class="hero-card-avatar">AP</div>
+          <div>
+            <div class="hero-card-name">Mi día — Adriana</div>
+            <div class="hero-card-role">Martes 25 de marzo</div>
+          </div>
+        </div>
+        <div class="hero-card-day">
+          <h3>Hoy</h3>
+          <span>5 de 8 completadas</span>
+        </div>
+        <div class="task-list">
+          <div class="task done" onclick="this.classList.toggle('done')">
+            <div class="task-check"></div>
+            <span class="task-text">Preparar batch de snacks</span>
+            <span class="task-tag tag-nutri">Nutrición</span>
+          </div>
+          <div class="task done" onclick="this.classList.toggle('done')">
+            <div class="task-check"></div>
+            <span class="task-text">Revisar plan semanal</span>
+            <span class="task-tag tag-org">Organización</span>
+          </div>
+          <div class="task done" onclick="this.classList.toggle('done')">
+            <div class="task-check"></div>
+            <span class="task-text">Tomar magnesio</span>
+            <span class="task-tag tag-nutri">Suplemento</span>
+          </div>
+          <div class="task" onclick="this.classList.toggle('done')">
+            <div class="task-check"></div>
+            <span class="task-text">Cocinar cena antiinflamatoria</span>
+            <span class="task-tag tag-nutri">Nutrición</span>
+          </div>
+          <div class="task" onclick="this.classList.toggle('done')">
+            <div class="task-check"></div>
+            <span class="task-text">10 min de journaling</span>
+            <span class="task-tag tag-self">Bienestar</span>
+          </div>
+        </div>
+      </div>
+      <div class="float-card float-meal">
+        <div class="meal-emoji">🥗</div>
+        <div class="meal-name">Bowl antiinflamatorio</div>
+        <div class="meal-tag">Lista en 15 min</div>
+      </div>
+      <div class="float-card float-streak">
+        <div class="streak-num">12</div>
+        <div class="streak-label">días de racha</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="problem" id="problema">
+  <div class="problem-inner">
+    <span class="section-label reveal">El problema real</span>
+    <h2 class="reveal">Las apps de productividad no fueron diseñadas para vos</h2>
+    <p class="problem-text reveal">Si tenés TDAH o TEA, seguramente ya probaste decenas de apps. Y las abandonaste todas. No es tu culpa — fueron diseñadas para cerebros neurotípicos.</p>
+    <div class="problem-grid">
+      <div class="problem-card reveal reveal-delay-1">
+        <div class="problem-icon" style="background:var(--lavender-50)">🧠</div>
+        <h3>Parálisis por análisis</h3>
+        <p>Demasiadas opciones y configuraciones. Tu cerebro se congela antes de empezar.</p>
+      </div>
+      <div class="problem-card reveal reveal-delay-2">
+        <div class="problem-icon" style="background:var(--terra-50)">🔥</div>
+        <h3>Inflamación invisible</h3>
+        <p>Comés lo que podés, no lo que tu cerebro necesita. La niebla mental se vuelve tu estado normal.</p>
+      </div>
+      <div class="problem-card reveal reveal-delay-3">
+        <div class="problem-icon" style="background:var(--rose-50)">💔</div>
+        <h3>Soledad en el proceso</h3>
+        <p>Nadie en tu entorno entiende por qué algo "simple" se siente imposible para vos.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUTION -->
+<section class="solution" id="solucion">
+  <div class="solution-inner">
+    <div class="solution-header">
+      <span class="section-label reveal">La solución</span>
+      <h2 class="reveal">Un sistema diseñado para tu cerebro</h2>
+      <p class="solution-sub reveal">Tres pilares que trabajan juntos para darte estructura sin rigidez.</p>
+    </div>
+    <div class="pillars">
+      <div class="pillar pillar-org reveal reveal-delay-1">
+        <div class="pillar-icon" style="background:var(--lavender-50)">🗂️</div>
+        <h3>Organización adaptada</h3>
+        <p>Rutinas visuales, timers amigables y un sistema de tareas que entiende tu ritmo — no el de un robot.</p>
+        <div class="pillar-features">
+          <div class="pillar-feature">Planificador visual diario/semanal</div>
+          <div class="pillar-feature">Timer pomodoro con pausas sensoriales</div>
+          <div class="pillar-feature">Tareas desglosadas en micro-pasos</div>
+          <div class="pillar-feature">Recordatorios gentiles, no invasivos</div>
+        </div>
+      </div>
+      <div class="pillar pillar-nutri reveal reveal-delay-2">
+        <div class="pillar-icon" style="background:var(--sage-50)">🥑</div>
+        <h3>Nutrición funcional</h3>
+        <p>Recetas antiinflamatorias creadas por Adriana, planificación de comidas y una guía para desinflamar tu cerebro.</p>
+        <div class="pillar-features">
+          <div class="pillar-feature">Menú semanal antiinflamatorio</div>
+          <div class="pillar-feature">Recetas rápidas (10-20 min)</div>
+          <div class="pillar-feature">Lista de compras automática</div>
+          <div class="pillar-feature">Guía de suplementación básica</div>
+        </div>
+      </div>
+      <div class="pillar pillar-comm reveal reveal-delay-3">
+        <div class="pillar-icon" style="background:var(--rose-50)">🤝</div>
+        <h3>Comunidad segura</h3>
+        <p>Un espacio donde nadie te juzga. Compartí tus logros, tus días difíciles y encontrá personas que entienden.</p>
+        <div class="pillar-features">
+          <div class="pillar-feature">Foro moderado y respetuoso</div>
+          <div class="pillar-feature">Challenges mensuales grupales</div>
+          <div class="pillar-feature">Sesiones en vivo con Adriana</div>
+          <div class="pillar-feature">Grupos por interés y diagnóstico</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STORY -->
+<section class="story" id="adriana">
+  <div class="story-inner">
+    <div class="story-image reveal">
+      <div class="story-photo">
+        <img src="images/adriana.jpg" alt="Adriana Peralta — Nutricionista funcional, chef y creadora de NeuroChef" loading="lazy">
+      </div>
+      <div class="story-quote-float">
+        "Si yo pude organizarme con TDAH y autismo, vos también podés. Solo necesitás el sistema correcto."
+      </div>
+    </div>
+    <div class="story-content">
+      <span class="section-label reveal">Quién soy</span>
+      <h2 class="reveal">Hola, soy Adriana</h2>
+      <p class="story-text reveal">Nutricionista funcional, chef, y diagnosticada con TDAH y TEA grado 1. Durante años luché contra la desorganización, la niebla mental y la sensación de que mi cerebro estaba en contra mía.</p>
+      <p class="story-text reveal">Hasta que descubrí que la clave no era forzarme a ser "normal" — era crear sistemas que trabajaran <strong>con</strong> mi cerebro, no contra él.</p>
+      <div class="story-highlight reveal">
+        Hoy, con más de 19K personas siguiendo mi proceso en Instagram, quiero convertir todo lo que aprendí en una herramienta que te ayude a vos también.
+      </div>
+      <p class="story-text reveal">NeuroChef nació de mi propia necesidad. Es el sistema que me hubiese encantado tener cuando estaba empezando.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="precios">
+  <div class="pricing-inner">
+    <div class="pricing-header">
+      <span class="section-label reveal">Precios de lanzamiento</span>
+      <h2 class="reveal">Planes para cada etapa</h2>
+      <p class="pricing-sub reveal">Empezá gratis. Crecé a tu ritmo.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="price-card reveal reveal-delay-1">
+        <div class="price-name">Explorador</div>
+        <div class="price-amount">Gratis</div>
+        <p class="price-desc">Para conocer la plataforma y empezar a organizarte.</p>
+        <div class="price-features">
+          <div class="price-feature">Planificador diario básico</div>
+          <div class="price-feature">5 recetas antiinflamatorias</div>
+          <div class="price-feature">Timer pomodoro adaptado</div>
+          <div class="price-feature">Acceso al foro comunitario</div>
+        </div>
+        <a href="#unirme" class="price-btn price-btn-outline">Unirme gratis</a>
+      </div>
+      <div class="price-card featured reveal reveal-delay-2">
+        <div class="price-badge">Más popular</div>
+        <div class="price-name">Pro</div>
+        <div class="price-amount">$9<span>/mes</span></div>
+        <p class="price-desc">IA personalizada + nutrición completa para tu cerebro.</p>
+        <div class="price-features">
+          <div class="price-feature">Todo lo de Explorador</div>
+          <div class="price-feature">IA que adapta tu rutina diaria</div>
+          <div class="price-feature">Biblioteca completa de recetas</div>
+          <div class="price-feature">Menú semanal personalizado</div>
+          <div class="price-feature">Lista de compras automática</div>
+          <div class="price-feature">Seguimiento de hábitos y rachas</div>
+        </div>
+        <button onclick="document.querySelector('#unirme input').focus()" class="price-btn price-btn-primary">Reservar mi lugar</button>
+      </div>
+      <div class="price-card reveal reveal-delay-3">
+        <div class="price-name">Premium</div>
+        <div class="price-amount">$19<span>/mes</span></div>
+        <p class="price-desc">Comunidad + coaching grupal con Adriana.</p>
+        <div class="price-features">
+          <div class="price-feature">Todo lo de Pro</div>
+          <div class="price-feature">Sesiones en vivo mensuales</div>
+          <div class="price-feature">Grupo privado exclusivo</div>
+          <div class="price-feature">Challenges con premios</div>
+          <div class="price-feature">Consulta nutricional trimestral</div>
+          <div class="price-feature">Acceso anticipado a novedades</div>
+        </div>
+        <a href="#unirme" class="price-btn price-btn-outline">Reservar mi lugar</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta" id="unirme">
+  <div class="cta-inner">
+    <h2>Sumate a la lista de espera</h2>
+    <p>Sé de las primeras personas en acceder cuando lancemos. Los primeros 100 van a tener un descuento especial de por vida.</p>
+    <form class="cta-form" id="cta-form">
+      <input type="email" placeholder="Tu mejor email" required>
+      <button type="submit">Quiero acceso</button>
+    </form>
+    <p class="cta-note">Sin spam. Solo novedades sobre el lanzamiento.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-links">
+    <a href="https://instagram.com/nutriadriperalta" target="_blank">Instagram</a>
+    <a href="#">Términos</a>
+    <a href="#">Privacidad</a>
+  </div>
+  <p>© 2026 NeuroChef — Creado con amor por un cerebro neurodivergente.</p>
+</footer>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <div class="toast-icon">✓</div>
+  <span>¡Listo! Te avisamos cuando lancemos 🎉</span>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+// Supabase
+var supabaseClient = window.supabase.createClient(
+  'https://jfpeamjbhaqnbupkrcgb.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpmcGVhbWpiaGFxbmJ1cGtyY2diIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwNDU5NTQsImV4cCI6MjA4ODYyMTk1NH0.OhNAVhIqWHxtasoTggOUZ7EkXIUynhm8D20SDkdVl94'
+);
+
+// Scroll reveal
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+    }
+  });
+}, {threshold:0.1, rootMargin:'0px 0px -50px 0px'});
+reveals.forEach(el => observer.observe(el));
+
+// Form handling
+document.querySelectorAll('#hero-form, #cta-form').forEach(function(form) {
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    var input = form.querySelector('input');
+    var button = form.querySelector('button');
+    var email = input.value.trim();
+    if (!email) return;
+
+    button.disabled = true;
+    button.textContent = 'Enviando...';
+
+    supabaseClient
+      .from('waitlist')
+      .insert([{ email: email, source: 'landing' }])
+      .then(function(result) {
+        if (result.error) {
+          if (result.error.code === '23505') {
+            showToast('Ya estás en la lista. ¡Te avisamos pronto!');
+          } else {
+            showToast('Hubo un error. Intentá de nuevo.');
+          }
+        } else {
+          showToast('¡Listo! Te avisamos cuando lancemos 🎉');
+        }
+        input.value = '';
+        button.disabled = false;
+        button.textContent = 'Quiero acceso';
+      });
+  });
+});
+
+function showToast(message) {
+  const toast = document.getElementById('toast');
+  if (message) toast.querySelector('span').textContent = message;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 4000);
+}
+
+// Smooth nav background on scroll
+window.addEventListener('scroll', () => {
+  const nav = document.querySelector('.nav');
+  if(window.scrollY > 50) {
+    nav.style.boxShadow = '0 2px 20px rgba(44,36,24,0.06)';
+  } else {
+    nav.style.boxShadow = 'none';
+  }
+});
+</script>
+</body>
+</html>
