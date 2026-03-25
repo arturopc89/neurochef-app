@@ -10,6 +10,11 @@ import NutritionPage from './pages/NutritionPage'
 import CommunityPage from './pages/CommunityPage'
 import AdminLayout from './pages/admin/AdminLayout'
 import AdminDashboard from './pages/admin/AdminDashboard'
+import LeadsPage from './pages/admin/LeadsPage'
+import UsersPage from './pages/admin/UsersPage'
+import CommunityModPage from './pages/admin/CommunityModPage'
+import RecipesPage from './pages/admin/RecipesPage'
+import NotificationsPage from './pages/admin/NotificationsPage'
 
 function ProtectedRoute({ children }) {
   const user = useAuthStore((s) => s.user)
@@ -60,6 +65,11 @@ export default function App() {
           }
         >
           <Route index element={<AdminDashboard />} />
+          <Route path="leads" element={<LeadsPage />} />
+          <Route path="usuarios" element={<UsersPage />} />
+          <Route path="comunidad" element={<CommunityModPage />} />
+          <Route path="recetas" element={<RecipesPage />} />
+          <Route path="notificaciones" element={<NotificationsPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
