@@ -1,0 +1,56 @@
+@import "tailwindcss";
+
+@theme {
+  --color-sage-50: #f4f7f0;
+  --color-sage-100: #e8eede;
+  --color-sage-200: #d1ddbf;
+  --color-sage-300: #a8bc82;
+  --color-sage-400: #7d9a52;
+  --color-sage-500: #5c7a38;
+  --color-sage-600: #4a6330;
+  --color-sage-700: #374a24;
+
+  --color-terra-50: #fdf6f0;
+  --color-terra-100: #faeadb;
+  --color-terra-200: #f4d2b5;
+  --color-terra-300: #e8a872;
+  --color-terra-400: #d4844a;
+  --color-terra-500: #b8672e;
+  --color-terra-600: #944e1f;
+
+  --color-cream: #fefcf7;
+  --color-cream-dark: #f9f4eb;
+
+  --color-lavender-50: #f3f0fa;
+  --color-lavender-100: #e4ddf4;
+  --color-lavender-200: #c9bae9;
+  --color-lavender-400: #8b6cc7;
+  --color-lavender-600: #6244a0;
+
+  --color-rose-50: #fdf2f4;
+  --color-rose-100: #fbe5e8;
+  --color-rose-300: #f0a3ae;
+  --color-rose-400: #e87085;
+  --color-rose-600: #c43a56;
+
+  --color-text-primary: #2c2418;
+  --color-text-secondary: #6b5e4f;
+  --color-text-muted: #9e9183;
+
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--color-text-primary);
+  background: var(--color-cream);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1.2;
+}
