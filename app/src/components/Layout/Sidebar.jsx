@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom'
-import { LayoutDashboard, CheckSquare, Timer, UtensilsCrossed, Users, LogOut } from 'lucide-react'
+import { LayoutDashboard, CheckSquare, Timer, UtensilsCrossed, Users, LogOut, Shield } from 'lucide-react'
 import { useAuthStore } from '../../stores/authStore'
 
 const navItems = [
@@ -12,6 +12,8 @@ const navItems = [
 
 export default function Sidebar() {
   const signOut = useAuthStore((s) => s.signOut)
+  const profile = useAuthStore((s) => s.profile)
+  const isAdmin = profile?.role === 'admin'
 
   return (
     <aside className="fixed left-0 top-0 bottom-0 w-64 bg-white border-r border-stone-200 flex flex-col p-6 max-md:hidden">
@@ -38,6 +40,21 @@ export default function Sidebar() {
         ))}
       </nav>
 
+      {isAdmin && (
+        <NavLink
+          to="/admin"
+          className={({ isActive }) =>
+            `flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors mb-2 ${
+              isActive
+                ? 'bg-terra-100 text-terra-600'
+                : 'text-terra-500 hover:bg-cream-dark'
+            }`
+          }
+        >
+          <Shield size={20} />
+          Panel Admin
+        </NavLink>
+      )}
       <button
         onClick={signOut}
         className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-text-muted hover:bg-cream-dark transition-colors"

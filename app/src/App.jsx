@@ -8,6 +8,8 @@ import TasksPage from './pages/TasksPage'
 import TimerPage from './pages/TimerPage'
 import NutritionPage from './pages/NutritionPage'
 import CommunityPage from './pages/CommunityPage'
+import AdminLayout from './pages/admin/AdminLayout'
+import AdminDashboard from './pages/admin/AdminDashboard'
 
 function ProtectedRoute({ children }) {
   const user = useAuthStore((s) => s.user)
@@ -48,6 +50,16 @@ export default function App() {
           <Route path="/timer" element={<TimerPage />} />
           <Route path="/nutricion" element={<NutritionPage />} />
           <Route path="/comunidad" element={<CommunityPage />} />
+        </Route>
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute>
+              <AdminLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route index element={<AdminDashboard />} />
         </Route>
       </Routes>
     </BrowserRouter>

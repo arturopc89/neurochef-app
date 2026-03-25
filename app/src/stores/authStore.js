@@ -8,10 +8,32 @@ export const useAuthStore = create((set) => ({
 
   initialize: async () => {
     const { data: { session } } = await supabase.auth.getSession()
-    set({ user: session?.user ?? null, loading: false })
+    const user = session?.user ?? null
+    let profile = null
 
-    supabase.auth.onAuthStateChange((_event, session) => {
-      set({ user: session?.user ?? null })
+    if (user) {
+      const { data } = await supabase
+        .from('profiles')
+        .select('id, full_name, role')
+        .eq('id', user.id)
+        .single()
+      profile = data
+    }
+
+    set({ user, profile, loading: false })
+
+    supabase.auth.onAuthStateChange(async (_event, session) => {
+      const u = session?.user ?? null
+      let p = null
+      if (u) {
+        const { data } = await supabase
+          .from('profiles')
+          .select('id, full_name, role')
+          .eq('id', u.id)
+          .single()
+        p = data
+      }
+      set({ user: u, profile: p })
     })
   },
 
